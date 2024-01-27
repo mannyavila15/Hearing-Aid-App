@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HearingAidApp</string>
+    <string name="title_translator">Translator</string>
+    <string name="title_settings">Settings</string>
+</resources>
