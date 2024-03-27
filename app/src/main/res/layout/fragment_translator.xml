@@ -3,33 +3,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="56dp"
     tools:context=".ui.translator.TranslatorFragment">
 
-    <!-- TextView aligned near the top and centered horizontally -->
-    <TextView
-        android:id="@+id/text_translator"
+    <!-- TextView for displaying text at the top -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Text will appear here"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:background="@drawable/textview_border"
-        android:padding="10dp" />
+        android:layout_marginRight="16dp">
 
-    <!-- Button aligned near the bottom and centered horizontally -->
+        <EditText
+            android:id="@+id/text_translator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:text="Text will appear here"
+            android:gravity="start|top"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:background="@drawable/textview_border"
+            android:padding="10dp"
+            android:minHeight="200dp"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="6"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:fadeScrollbars="false"/>
+    </ScrollView>
+
+    <!-- LinearLayout for the slider and its labels -->
+    <LinearLayout
+        android:id="@+id/seekBarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:padding="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="40 dB"
+            android:textSize="16sp"
+            android:textColor="@color/black" />
+
+        <SeekBar
+            android:id="@+id/seekBarAudioAmp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="1000"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="80 dB"
+            android:textSize="16sp"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <!-- Button below the TextView and above the LinearLayout -->
     <Button
         android:id="@+id/btn_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
+        android:layout_above="@id/seekBarContainer"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
         android:backgroundTint="@android:color/holo_blue_dark"
-        android:text="Speech to text"
+        android:text="Translate"
         android:textColor="@android:color/white" />
+
+    <!-- TextView for the slider label, positioned above the LinearLayout -->
+    <TextView
+        android:id="@+id/tvSliderLabel2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_above="@id/seekBarContainer"
+        android:text="Select audio amplification level"
+        android:textColor="@color/black"
+        android:textSize="20sp"/>
+
 </RelativeLayout>

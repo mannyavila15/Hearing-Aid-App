@@ -2,4 +2,52 @@
     <string name="app_name">HearingAidApp</string>
     <string name="title_translator">Translator</string>
     <string name="title_settings">Settings</string>
+
+    <string-array name="language_names">
+        <item>English</item>
+        <item>Spanish</item>
+        <item>French</item>
+        <item>Dutch</item>
+        <item>Portuguese</item>
+        <item>Arabic</item>
+        <item>Chinese</item>
+        <item>Russian</item>
+        <item>Japanese</item>
+        <item>German</item>
+        <item>Italian</item>
+        <item>Korean</item>
+        <item>Hindi</item>
+        <item>Swedish</item>
+        <item>Danish</item>
+        <item>Finnish</item>
+        <item>Polish</item>
+        <item>Turkish</item>
+        <item>Norwegian</item>
+        <item>Greek</item>
+    </string-array>
+
+    <string-array name="language_codes">
+        <item>en</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>nl</item>
+        <item>pt</item>
+        <item>ar</item>
+        <item>zh</item>
+        <item>ru</item>
+        <item>ja</item>
+        <item>de</item>
+        <item>it</item>
+        <item>ko</item>
+        <item>hi</item>
+        <item>sv</item>
+        <item>da</item>
+        <item>fi</item>
+        <item>pl</item>
+        <item>tr</item>
+        <item>no</item>
+        <item>el</item>
+    </string-array>
+
+
 </resources>
