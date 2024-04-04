@@ -47,7 +47,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="40 dB"
+            android:text="0 dB"
             android:textSize="16sp"
             android:textColor="@color/black" />
 
@@ -56,14 +56,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:max="1000"
+            android:max="10"
+            android:progress="0"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="80 dB"
+            android:text="10 dB"
             android:textSize="16sp"
             android:textColor="@color/black" />
     </LinearLayout>
