@@ -40,6 +40,8 @@ import org.json.JSONException
 import java.io.IOException
 import android.util.Base64
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 
 
 class TranslatorFragment : Fragment() {
@@ -50,6 +52,10 @@ class TranslatorFragment : Fragment() {
     private val audioAmplifier = AudioAmplifier()
     private val RQ_SPEECH_REC = 102
     private var lastTranscribedText: String? = null
+
+    private var transcript = StringBuilder()
+    private var resetTranscriptJob: Job? = null
+
 
     companion object {
         private const val PERMISSION_REQUEST_CODE = 1
@@ -77,6 +83,10 @@ class TranslatorFragment : Fragment() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) { }
         })
+
+        if (transcript.isEmpty()) {
+            binding.textTranslator.setText("Text will appear here")
+        }
 
         checkAndRequestPermissions()
     }
@@ -126,23 +136,33 @@ class TranslatorFragment : Fragment() {
                 println("Response received: $responseData")
                 val transcribedText = parseTranscribedText(responseData)
                 // Update UI with transcribed text
-                transcribedText?.let { newText ->
+                if (transcribedText != null && transcribedText.isNotEmpty()) {
+                    transcript.append(transcribedText + " ")
                     activity?.runOnUiThread {
-                        // Update UI with new transcribed text
-                        translateText(newText)
+                        translateText(transcript.toString())
+                        startOrRestartTranscriptResetJob()
                     }
                 }
             }
         })
     }
 
-    fun refreshTranscriptionDisplay() {
-        // Reapply the last known transcription text with the current settings
-        lastTranscribedText?.let {
-            applyTextSize() // Ensure the latest text size is applied
-            translateText(it) // Set the last known transcription
-            // If you have language translation logic, apply it here before setting the text
+    private fun startOrRestartTranscriptResetJob() {
+        resetTranscriptJob?.cancel() // Cancel any existing job
+        resetTranscriptJob = viewLifecycleOwner.lifecycleScope.launch {
+            delay(7000) // Wait for 7 seconds
+            transcript.clear() // Clear the transcript
+            activity?.runOnUiThread {
+                binding.textTranslator.setText("") // Clear the text on UI
+            }
         }
+    }
+
+
+    private fun refreshTranscriptionDisplay() {
+        val currentText = transcript.toString() // Get the current transcript text
+        translateText(currentText) // Re-translate the entire transcript
+        applyTextSize() // Ensure the text size is also refreshed
     }
 
 
@@ -234,6 +254,11 @@ class TranslatorFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         refreshTranscriptionDisplay()
+        startOrRestartTranscriptResetJob()
+
+        if (transcript.isEmpty()) {
+            binding.textTranslator.setText("Text will appear here")
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -251,6 +276,7 @@ class TranslatorFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        resetTranscriptJob?.cancel()
         _binding = null
         audioAmplifier.stopCapturingAndAmplifying()
     }

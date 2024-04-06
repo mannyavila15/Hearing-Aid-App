@@ -70,16 +70,6 @@
     </LinearLayout>
 
     <!-- Button below the TextView and above the LinearLayout -->
-    <Button
-        android:id="@+id/btn_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/seekBarContainer"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:text="Translate"
-        android:textColor="@android:color/white" />
 
     <!-- TextView for the slider label, positioned above the LinearLayout -->
     <TextView
