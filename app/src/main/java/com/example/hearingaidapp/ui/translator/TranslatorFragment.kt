@@ -326,6 +326,10 @@ class TranslatorFragment : Fragment() {
                 while (isCapturing) {
                     val readResult = audioRecord.read(buffer, 0, buffer.size)
                     if (readResult > 0) {
+                        for (i in buffer.indices) {
+                            buffer[i] = (buffer[i] * gainFactor).coerceIn(Short.MIN_VALUE.toFloat().toDouble(),
+                                Short.MAX_VALUE.toFloat().toInt().toShort().toDouble()).toInt().toShort()
+                        }
                         // Write the captured audio data to the AudioTrack for playback
                         audioTrack.write(buffer, 0, readResult)
 
