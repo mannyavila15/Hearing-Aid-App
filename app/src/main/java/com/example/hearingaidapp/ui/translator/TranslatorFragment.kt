@@ -52,7 +52,7 @@ class TranslatorFragment : Fragment() {
     private val audioAmplifier = AudioAmplifier()
     private val RQ_SPEECH_REC = 102
     private var lastTranscribedText: String? = null
-
+    private var transcriptionCount = 0
     private var transcript = StringBuilder()
     private var resetTranscriptJob: Job? = null
 
@@ -140,7 +140,14 @@ class TranslatorFragment : Fragment() {
                     transcript.append(transcribedText + " ")
                     activity?.runOnUiThread {
                         translateText(transcript.toString())
-                        startOrRestartTranscriptResetJob()
+                        transcriptionCount ++
+                        if (transcriptionCount >= 8) { // Check if it's time to clear the text
+                            transcript.clear()
+                            transcriptionCount = 0 // Reset the count
+                            binding.textTranslator.setText("") // Clear the text on UI
+                        } else {
+                            startOrRestartTranscriptResetJob()
+                        }
                     }
                 }
             }
